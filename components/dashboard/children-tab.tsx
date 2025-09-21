@@ -6,11 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { AddChildDialog } from "./add-child-dialog"
 import { mockChildren, mockScreenTimeData } from "@/lib/mock-data"
 import { Clock, MapPin, Shield, Plus } from "lucide-react"
 
 export function ChildrenTab() {
   const [selectedChild, setSelectedChild] = useState<string | null>(null)
+  const [children, setChildren] = useState(mockChildren)
+  const [showAddDialog, setShowAddDialog] = useState(false)
 
   const formatTime = (minutes: number) => {
     const hours = Math.floor(minutes / 60)
@@ -26,6 +29,10 @@ export function ChildrenTab() {
     return mockScreenTimeData.filter((entry) => entry.childId === childId)
   }
 
+  const handleAddChild = (newChild: any) => {
+    setChildren((prev) => [...prev, newChild])
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -33,14 +40,14 @@ export function ChildrenTab() {
           <h2 className="text-2xl font-bold">Children Management</h2>
           <p className="text-muted-foreground">Monitor and manage your children's digital activity</p>
         </div>
-        <Button>
+        <Button onClick={() => setShowAddDialog(true)}>
           <Plus className="h-4 w-4 mr-2" />
           Add Child
         </Button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {mockChildren.map((child) => (
+        {children.map((child) => (
           <Card key={child.id} className="cursor-pointer hover:shadow-md transition-shadow">
             <CardHeader>
               <div className="flex items-center space-x-4">
@@ -186,6 +193,8 @@ export function ChildrenTab() {
           </Card>
         ))}
       </div>
+
+      <AddChildDialog open={showAddDialog} onOpenChange={setShowAddDialog} onAddChild={handleAddChild} />
     </div>
   )
 }

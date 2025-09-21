@@ -1,8 +1,9 @@
 "use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { GoogleMap } from "./google-map"
 import { mockChildren } from "@/lib/mock-data"
 import { MapPin, Clock, Navigation } from "lucide-react"
 
@@ -26,24 +27,7 @@ export function LocationTab() {
         <p className="text-muted-foreground">Monitor your children's real-time location and movement history</p>
       </div>
 
-      {/* Map Placeholder */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Live Map View</CardTitle>
-          <CardDescription>Real-time location of all children</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 bg-muted rounded-lg flex items-center justify-center">
-            <div className="text-center">
-              <MapPin className="h-12 w-12 text-muted-foreground mx-auto mb-2" />
-              <p className="text-muted-foreground">Interactive map would be displayed here</p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Showing live locations of {mockChildren.length} children
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <GoogleMap children={mockChildren} height="400px" />
 
       {/* Children Location Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
